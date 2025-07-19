@@ -4,7 +4,7 @@ services:
     image: node:latest
     working_dir: /usr/src/app
     volumes:
-      - .:/usr/src/app
+      - .:/usr/src/app:ro
     env_file:
       - .env
     command: >
@@ -14,9 +14,16 @@ services:
       --username ${USERNAME} \
       --password ${PASSWORD} \
       --port ${PORT} \
-      ${SILENT:+--silent}"
+      ${SILENT:+--silent}  || tail -f /dev/null"
     ports:
       - "2000:2000"
+    restart: always
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:$PORT"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
 
 
 
