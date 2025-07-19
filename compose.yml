@@ -1,5 +1,6 @@
 services:
   webserver:
+    container_name: webserver-http-server
     image: node:latest
     working_dir: /usr/src/app
     volumes:
