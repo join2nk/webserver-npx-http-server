@@ -1,0 +1,21 @@
+services:
+  webserver:
+    image: node:latest
+    working_dir: /usr/src/app
+    volumes:
+      - .:/usr/src/app
+    env_file:
+      - .env
+    command: >
+      sh -c "
+      npm install -g http-server &&
+      http-server . \
+      --username ${USERNAME} \
+      --password ${PASSWORD} \
+      --port ${PORT} \
+      ${SILENT:+--silent}"
+    ports:
+      - "2000:2000"
+
+
+
